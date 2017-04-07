@@ -44,7 +44,35 @@
        </table>
        <p> &nbsp;</p>
 
+       <table border="0" cellpadding="1" cellspacing="1" style="width: 360px">
+       <tbody> 
+           <tr>
+               <td><button onclick="calMeri(0)">手太陰肺</button></td>
+               <td><button onclick="calMeri(1)">手少陰心</button></td>
+               <td><button onclick="calMeri(2)">手厥陰心包</button></td>
+           </tr>
+           <tr>
+               <td><button onclick="calMeri(3)">手太陽小腸</button></td>
+               <td><button onclick="calMeri(4)">手少陽三焦</button></td>
+               <td><button onclick="calMeri(5)">手陽明大腸</button></td>
+           </tr>
+           <tr>
+               <td><button onclick="calMeri(6)">足太陰脾</button></td>
+               <td><button onclick="calMeri(7)">足少陰腎</button></td>
+               <td><button onclick="calMeri(8)">足厥陰肝</button></td>
+           </tr>
+           <tr>
+               <td><button onclick="calMeri(9)">足太陽膀胱</button></td>
+               <td><button onclick="calMeri(10)"> 足少陽膽</button></td>
+               <td><button onclick="calMeri(11)"> 足陽明胃</button></td>
+           </tr>
+       </tbody>
+       </table>
+       <p> &nbsp;</p>
 
+
+
+<!--
        <div>
            <span><button onclick="calMeri(0)">手太陰肺</button></span>
            <span><button onclick="calMeri(1)">手少陰心</button></span>
@@ -65,7 +93,7 @@
            <span><button onclick="calMeri(10)"> 足少陽膽</button></span>
            <span><button onclick="calMeri(11)"> 足陽明胃 </button></span>
        </div>
-
+-->
 <!--
 <div>
 <form name="tabs_1_sel" id="SELECTION"> 
@@ -121,7 +149,6 @@
         listStr=listStr+  "<br> 表裡本絡穴 : "+MeriList[OrgNameList[meriClick]]+"之絡穴 : "+SuPListList[meriClick][7];
         listStr=listStr+  "</h5>";
 
-        alert(listStr);
         document.getElementById("meriContent").innerHTML = listStr;   
         
         }
