@@ -35,6 +35,30 @@
 
        let hexa2AcupListNow     = hexa2AcupList0;
        let t5_hexa2AcupListNow     = hexa2AcupList0;
+
+        let cbHitWeight = [];
+
+
+       //--- for 五門十變 ---------
+       //[本穴]       [臟腑]           [本穴]       [合化實證]  [腑取穴]  [臟取穴]   [合化虛證] [腑取穴] [臟取穴]    [互合治療法]
+       let LuList = ["甲已合化土", "膽（木）    ",  "足臨泣（輸)",  "瀉火", "足三里",   "陰谷",  "補水", "陽谷   ",  "經渠", "太白" ];	   
+       let LiList = ["甲已合化土", "脾（土）    ",  "太白（輸） ",  "瀉金", "行間* ",   "二間*", "補火", "足三里 ",  "陰谷", "足臨泣" ];   
+       let StList = ["乙庚合化金", "肝（木)     ",  "大敦（井)  ",  "瀉火", "足三里",   "陰谷",  "補水", "陽谷	",   "經渠", "商陽" ];	   
+       let SpList = ["乙庚合化金", "大腸（金）  ",  "商陽（井） ",  "瀉水", "陽谷  ",   "經渠",  "補土", "足臨泣",   "太白", "大敦" ];	   
+       let HtList = ["丙辛合化水", "小腸（君火) ",  "陽谷（經)  ",  "瀉土", "足臨泣",   "太白",  "補木", "少府	",   "通谷", "經渠" ];	   
+       let SiList = ["丙辛合化水", "肺（金）    ",  "經渠（經） ",  "瀉水", "陽谷  ",   "經渠",  "補土", "足臨泣",   "太白", "陽谷" ];	   
+       let BlList = ["丁壬合化木", "心（君火）  ",  "少府（滎） ",  "瀉土", "足臨泣",   "太白",  "補木", "少府	",   "通谷", "通谷" ];	   
+       let KiList = ["丁壬合化木", "膀胱（水）  ",  "通谷（滎)  ",  "瀉木", "少府  ",   "通谷",  "補金", "曲泉*	",   "曲池*","少府" ];	   
+       let PcList = ["丁壬合化木", "三焦（相火）",  "支溝（經） ",  "瀉土", "足臨泣",   "太白",  "補木", "少府	",   "通谷", "少府" ];	   
+       let SjList = ["戌癸合化火", "胃（土）    ",  "足三里（合)",  "瀉金", "行間* ",   "二間*", "補火", "足三里 ",  "陰谷", "陰谷" ];	   
+       let GbList = ["戌癸合化火", "腎（水）    ",  "陰谷（合） ",  "瀉木", "少府  ",   "通谷",  "補金", "曲泉*	",   "曲池*","足三里" ];   
+       let LrList = ["戌癸合化火", "心包（相火）",  "勞宮（滎） ",  "瀉土", "足臨泣",   "太白",  "補木", "少府	",   "通谷", "足三里" ];    
+
+       let mainList = [LuList, LiList, StList, SpList, HtList, SiList, BlList, KiList, PcList, SjList, GbList, LrList];
+
+       let selOrgan = 0;
+
+       let OrgRealNameList    =  [  "Lu肺",   "LI大腸",   "ST胃",   "SP脾",   "HT心",   "SI小腸",   "BL膀胱",   "KI腎",   "PC心包",   "SJ三焦",   "GB膽",   "LR肝"]            
  
   </script> 
 
@@ -53,19 +77,21 @@
     <li><a href="#tabs-4">易卦取穴</a></li>
     <li><a href="#tabs-5">十二消息卦</a></li>
     <li><a href="#tabs-6">五門十變</a></li>
-    <li><a href="#tabs-7">靈龜八法</a></li>
+<!---    <li><a href="#tabs-7">靈龜八法</a></li> --->
   </ul>
 
   <!---------------------- TAB --------------------------------------->
   <div id="tabs-1">
 
-       <table border="1" cellpadding="1" cellspacing="1" style="width: 300px">
+       <table border="1" cellpadding="1" cellspacing="0" style="width: 300px">
        <tbody> 
-           <tr>
-               <td colspan="2">
-                  <p><p id="meriContent"></p></p>
-               </td>
-           </tr>
+           <tr><td>同爻補數同名經 : </td><td><p id="meriContent_01"></p></td></tr>
+           <tr><td>相應爻對別通經 : </td><td><p id="meriContent_02"></p></td></tr>
+           <tr><td>同卦陰陽表裡經 : </td><td><p id="meriContent_03"></p></td></tr>
+           <tr><td>風行跨時陰陽經 : </td><td><p id="meriContent_04"></p></td></tr>
+           <tr><td>手足應對接宮經 : </td><td><p id="meriContent_05"></p></td></tr>
+           <tr><td>宮位推進同屬經 : </td><td><p id="meriContent_06"></p></td></tr>
+           <tr><td>同宮手足陰陽經 : </td><td><p id="meriContent_07"></p></td></tr>
        </tbody>
        </table>
        <p> &nbsp;</p>
@@ -106,6 +132,7 @@
        
        function calMeri(meriClick){
 
+/*
         listStr=""
         listStr=listStr+"<br> 同爻補數同名經 : "+MeriList[SameNameList[meriClick]]
         listStr=listStr+"<br> 相應爻對別通經 : "+MeriList[AlterNameList[meriClick]]
@@ -115,9 +142,20 @@
         listStr=listStr+"<br> 宮位推進同屬經 : "+MeriList[SameLocateList[meriClick]]
         listStr=listStr+"<br> 同宮手足陰陽經 : "+MeriList[InsideUnitList[meriClick]]
 
+
         listStr=listStr+"<br>\n"+orgDiagList[meriClick]
 
         document.getElementById("meriContent").innerHTML = listStr;   
+*/
+
+
+        document.getElementById("meriContent_01").innerHTML = MeriList[SameNameList[meriClick]];
+        document.getElementById("meriContent_02").innerHTML = MeriList[AlterNameList[meriClick]];
+        document.getElementById("meriContent_03").innerHTML = MeriList[InOutNameList[meriClick]];
+        document.getElementById("meriContent_04").innerHTML = MeriList[Add6NameList[meriClick]];
+        document.getElementById("meriContent_05").innerHTML = MeriList[CrossMiddleList[meriClick]];
+        document.getElementById("meriContent_06").innerHTML = MeriList[SameLocateList[meriClick]];
+        document.getElementById("meriContent_07").innerHTML = MeriList[InsideUnitList[meriClick]];
         
         }
 
@@ -267,38 +305,83 @@
   <!---------------------- TAB --------------------------------------->
   <div id="tabs-3">
 
-   計算結果: <textarea id="myText" rows="14" cols="100">
-               N/A</textarea>
+<div>
+    <table border="1" cellpadding="1" cellspacing="1" style="width: 300px">
+    <tr>
+    <td>肺  : <input type="checkbox" id="myCheck0"></td>
+    <td>大腸: <input type="checkbox" id="myCheck1"></td>
+    <td>胃  : <input type="checkbox" id="myCheck2"></td>
+    <td>脾  : <input type="checkbox" id="myCheck3"></td>
+    </tr>
+    <tr>
+    <td>心  : <input type="checkbox" id="myCheck4"></td>
+    <td>小腸: <input type="checkbox" id="myCheck5"></td>
+    <td>膀胱: <input type="checkbox" id="myCheck6"></td>
+    <td>腎  : <input type="checkbox" id="myCheck7"></td>
+    </tr>
+    <tr>
+    <td>心包: <input type="checkbox" id="myCheck8"></td>
+    <td>三焦: <input type="checkbox" id="myCheck9"></td>
+    <td>膽: <input type="checkbox" id="myCheck10"></td>
+    <td>肝: <input type="checkbox" id="myCheck11"></td>
+    </tr>
+    </table>
+</div>
 
-    <ul>
-    <li>
-    肺  : <input type="checkbox" id="myCheck0">
-    大腸: <input type="checkbox" id="myCheck1">
-    胃  : <input type="checkbox" id="myCheck2">
-    脾  : <input type="checkbox" id="myCheck3">
-    </li>
-    <li>
-    心  : <input type="checkbox" id="myCheck4">
-    小腸: <input type="checkbox" id="myCheck5">
-    膀胱: <input type="checkbox" id="myCheck6">
-    腎  : <input type="checkbox" id="myCheck7">
-    </li>
-    <li>
-    心包: <input type="checkbox" id="myCheck8">
-    三焦: <input type="checkbox" id="myCheck9">
-    膽: <input type="checkbox" id="myCheck10">
-    肝: <input type="checkbox" id="myCheck11">
-    </li>
-    </ul>
-
+<div>
 <button onclick="pickFunction()">計算最適經絡</button>
+<button onclick="cleanFunction()">重設</button>
+</div>
+
+<div>
+   <textarea id="myText" rows="18" cols="30">
+               N/A</textarea>
+</div>
 
 <script>
-    var cbList = [];
-    var cbHitWeight = [];
     //var listStr = "";
 
+    function cleanFunction() {
+
+        location.reload();
+
+/*        for (i = 0; i < 12; i++) {
+            cbHitWeight[i] = 0;
+        }
+        var listStr = "目前計算結果:\n\n";
+        listStr = listStr + "\n肺經積分   : "+cbHitWeight[0];
+        listStr = listStr + "\n大腸經積分 : "+cbHitWeight[1];
+        listStr = listStr + "\n胃經積分   : "+cbHitWeight[2];
+        listStr = listStr + "\n脾經積分   : "+cbHitWeight[3];
+        listStr = listStr + "\n心經積分   : "+cbHitWeight[4];
+        listStr = listStr + "\n小腸經積分 : "+cbHitWeight[5];
+        listStr = listStr + "\n膀胱經積分 : "+cbHitWeight[6];
+        listStr = listStr + "\n腎經積分   : "+cbHitWeight[7];
+        listStr = listStr + "\n心包經積分 : "+cbHitWeight[8];
+        listStr = listStr + "\n三焦經積分 : "+cbHitWeight[9];
+        listStr = listStr + "\n膽經積分   : "+cbHitWeight[10];
+        listStr = listStr + "\n肝經積分   : "+cbHitWeight[11];
+
+        //alert(listStr);
+
+
+        document.getElementById("myText").value = "";          
+        document.getElementById("myText").value += listStr;          
+*/
+    }
+
+
     function pickFunction() {
+
+        var cbList = [];
+        cbList.length = 0;
+
+        for (i = 0; i < 12; i++) {
+            cbHitWeight[i] = 0;
+        }
+
+        //alert ("cbHitWeight[0]="+cbHitWeight[0])
+
         var c0 = document.getElementById("myCheck0");
         var c1 = document.getElementById("myCheck1");
         var c2 = document.getElementById("myCheck2");
@@ -325,7 +408,7 @@
         if ( c10.checked == true) { cbList.push(10);}
         if ( c11.checked == true) { cbList.push(11);}
     
-        alert(cbList[0]+"...."+cbList[1]+"...."+cbList[2]);
+        //alert(cbList[0]+"...."+cbList[1]+"...."+cbList[2]);
 
 
 
@@ -354,6 +437,21 @@
       var groupList_GB=[]
       var groupList_LR=[]
 
+      groupList_LU.length = 0;
+      groupList_LI.length = 0;
+      groupList_ST.length = 0;
+      groupList_SP.length = 0;
+      groupList_HT.length = 0;
+      groupList_SI.length = 0;
+      groupList_BL.length = 0;
+      groupList_KI.length = 0;
+      groupList_PC.length = 0;
+      groupList_SJ.length = 0;
+      groupList_GB.length = 0;
+      groupList_LR.length = 0;
+
+      //alert("groupList_BL:"+groupList_BL)
+
       for (i = 0; i < 7; i++) {
           groupList_LU.push(listOfList[i][0]);
           groupList_LI.push(listOfList[i][1]);
@@ -368,17 +466,21 @@
 	  groupList_GB.push(listOfList[i][10]);
 	  groupList_LR.push(listOfList[i][11]);
       }
+        //alert ("i="+i)
+      //alert("groupList_BL:"+groupList_BL)
 
       for (i = 0; i < 12; i++) {
          cbHitWeight[i] = 0;
       }
-
-        alert(cbList[0]+"....."+cbHitWeight[0]+"..1.."+groupList_LU[0]);
+        //alert ("cbHitWeight[0]="+cbHitWeight[0])
+        //alert ("i="+i)
+        //alert(cbList[0]+"....."+cbHitWeight[0]+"..1.."+groupList_LU[0]);
 
       for (i = 0; i < cbList.length; i++) {
            for (j=0;j<groupList_LU.length; j++){
               if (groupList_LU[j] == cbList[i]){cbHitWeight[0] = cbHitWeight[0]+1;}
            }
+           //alert ("i="+i+"  j="+j+" <---")
            for (j=0;j<groupList_LI.length; j++){
                if (groupList_LI[j] == cbList[i]){cbHitWeight[1] = cbHitWeight[1]+1;}
            }
@@ -414,9 +516,10 @@
            }
         }
      
-        alert(cbList[0]+"........."+cbHitWeight[0]);
+        //alert ("i="+i+", j="+j)
+        //alert(cbList[0]+"........."+cbHitWeight[0]);
 
-        listStr = "";
+        listStr = "目前計算結果:\n\n";
         listStr = listStr + "\n肺經積分   : "+cbHitWeight[0];
         listStr = listStr + "\n大腸經積分 : "+cbHitWeight[1];
         listStr = listStr + "\n胃經積分   : "+cbHitWeight[2];
@@ -430,7 +533,7 @@
         listStr = listStr + "\n膽經積分   : "+cbHitWeight[10];
         listStr = listStr + "\n肝經積分   : "+cbHitWeight[11];
 
-        alert(listStr);
+        //alert(listStr);
 
 
         document.getElementById("myText").value = "";          
@@ -448,9 +551,9 @@
 <table border="0" cellpadding="1" cellspacing="1" style="width: 600px">
 <tbody> 
 <tr><td>
-<textarea id="myText_t4" rows="1" cols="20"></textarea> 
-<textarea id="myText_t4_1" rows="1" cols="20"></textarea> 
-<textarea id="myText_t4_2" rows="1" cols="20"></textarea> 
+<textarea id="myText_t4" rows="1" cols="10"></textarea> 
+<textarea id="myText_t4_1" rows="1" cols="8"></textarea> 
+<textarea id="myText_t4_2" rows="1" cols="8"></textarea> 
 
       <div>
           <form name="form_name" id="form_name">
@@ -635,9 +738,9 @@
 <table border="0" cellpadding="1" cellspacing="1" style="width: 600px">
 <tbody> 
 <tr><td>
-<textarea id="myText_t5" rows="1" cols="20"></textarea> 
-<textarea id="myText_t5_1" rows="1" cols="20"></textarea> 
-<textarea id="myText_t5_2" rows="1" cols="20"></textarea> 
+<textarea id="myText_t5" rows="1" cols="10"></textarea> 
+<textarea id="myText_t5_1" rows="1" cols="18"></textarea> 
+<textarea id="myText_t5_2" rows="1" cols="18"></textarea> 
 
       <div>
           <form name="form_name_t5" id="form_name_t5">
@@ -743,19 +846,19 @@
                   }
        }
 
-       
-       function assignMonth_01 () { selHexa = hexa12PiHexa[0];}
-       function assignMonth_02 () { selHexa = hexa12PiHexa[1];}
-       function assignMonth_03 () { selHexa = hexa12PiHexa[2];}
-       function assignMonth_04 () { selHexa = hexa12PiHexa[3];}
-       function assignMonth_05 () { selHexa = hexa12PiHexa[4];}
-       function assignMonth_06 () { selHexa = hexa12PiHexa[5];}
-       function assignMonth_07 () { selHexa = hexa12PiHexa[6];}
-       function assignMonth_08 () { selHexa = hexa12PiHexa[7];}
-       function assignMonth_09 () { selHexa = hexa12PiHexa[8];}
-       function assignMonth_10 () { selHexa = hexa12PiHexa[9];}
-       function assignMonth_11 () { selHexa = hexa12PiHexa[10];}
-       function assignMonth_12 () { selHexa = hexa12PiHexa[11];}
+
+       function assignMonth_01 () { selHexa = hexa12PiHexa[0];  document.getElementById("myText_t5_1").value = "選取月份: 一月"; document.getElementById("myText_t5_2").value = "節氣: 小寒、大寒"; }
+       function assignMonth_02 () { selHexa = hexa12PiHexa[1];  document.getElementById("myText_t5_1").value = "選取月份: 二月"; document.getElementById("myText_t5_2").value = "節氣: 立春、雨水"; }
+       function assignMonth_03 () { selHexa = hexa12PiHexa[2];  document.getElementById("myText_t5_1").value = "選取月份: 三月"; document.getElementById("myText_t5_2").value = "節氣: 驚蟄、春分"; }
+       function assignMonth_04 () { selHexa = hexa12PiHexa[3];  document.getElementById("myText_t5_1").value = "選取月份: 四月"; document.getElementById("myText_t5_2").value = "節氣: 清明、穀雨"; }
+       function assignMonth_05 () { selHexa = hexa12PiHexa[4];  document.getElementById("myText_t5_1").value = "選取月份: 五月"; document.getElementById("myText_t5_2").value = "節氣: 立夏、小滿"; }
+       function assignMonth_06 () { selHexa = hexa12PiHexa[5];  document.getElementById("myText_t5_1").value = "選取月份: 六月"; document.getElementById("myText_t5_2").value = "節氣: 芒種、夏至"; }
+       function assignMonth_07 () { selHexa = hexa12PiHexa[6];  document.getElementById("myText_t5_1").value = "選取月份: 七月"; document.getElementById("myText_t5_2").value = "節氣: 小暑、大暑"; }
+       function assignMonth_08 () { selHexa = hexa12PiHexa[7];  document.getElementById("myText_t5_1").value = "選取月份: 八月"; document.getElementById("myText_t5_2").value = "節氣: 立秋、處暑"; }
+       function assignMonth_09 () { selHexa = hexa12PiHexa[8];  document.getElementById("myText_t5_1").value = "選取月份: 九月"; document.getElementById("myText_t5_2").value = "節氣: 白露、秋分"; }
+       function assignMonth_10 () { selHexa = hexa12PiHexa[9];  document.getElementById("myText_t5_1").value = "選取月份: 十月"; document.getElementById("myText_t5_2").value = "節氣: 寒露、霜降"; }
+       function assignMonth_11 () { selHexa = hexa12PiHexa[10]; document.getElementById("myText_t5_1").value = "選取月份: 十一月"; document.getElementById("myText_t5_2").value="節氣: 立冬、小雪"; }
+       function assignMonth_12 () { selHexa = hexa12PiHexa[11]; document.getElementById("myText_t5_1").value = "選取月份: 十二月"; document.getElementById("myText_t5_2").value="節氣: 大雪、冬至"; }
 
        function t5_calAcupHexa () {
              //alert("hello");   //井穴\t滎穴\t輸穴\t原穴\t經穴\t合穴
@@ -796,12 +899,98 @@
  
   <!---------------------- TAB --------------------------------------->
   <div id="tabs-6">
-         
+  <textarea id="myText_t6_1" rows="4" cols="60"></textarea> 
+
+      <div>
+           <table>
+             <tr>
+                 <td><button onclick="t6_assignOrgan_01()">Lu肺  </button></td>
+                 <td><button onclick="t6_assignOrgan_02()">LI大腸</button></td>
+                 <td><button onclick="t6_assignOrgan_03()">ST胃  </button></td>
+                 <td><button onclick="t6_assignOrgan_04()">SP脾  </button></td></tr>
+             <tr><td><button onclick="t6_assignOrgan_05()">HT心  </button></td>
+                 <td><button onclick="t6_assignOrgan_06()">SI小腸</button></td>
+                 <td><button onclick="t6_assignOrgan_07()">BL膀胱</button></td>
+                 <td><button onclick="t6_assignOrgan_08()">KI腎  </button></td></tr>
+             <tr><td><button onclick="t6_assignOrgan_09()">PC心包</button></td>
+                 <td><button onclick="t6_assignOrgan_10()">SJ三焦</button></td>
+                 <td><button onclick="t6_assignOrgan_11()">GB膽  </button></td>
+                 <td><button onclick="t6_assignOrgan_12()">LR肝  </button></td></tr>
+           </table>
+      </div>
+      <div>         
+           <textarea id="myText_t6_2" rows="4" cols="60"></textarea> 
+      </div>         
+      <div>
+           <table>    
+             <tr><button onclick="t6_select01()">合化實證取穴</button></tr>
+             <tr><button onclick="t6_select02()">合化虛證取穴</button></tr>
+             <tr><button onclick="t6_select03()">互合治療取穴</button></tr>
+           </table>
+      </div>         
+
+<script>
+       function t6_assignOrgan_01 () { selOrgan = 0;   t6_f1();}
+       function t6_assignOrgan_02 () { selOrgan = 1;   t6_f1();}
+       function t6_assignOrgan_03 () { selOrgan = 2;   t6_f1();}
+       function t6_assignOrgan_04 () { selOrgan = 3;   t6_f1();}
+       function t6_assignOrgan_05 () { selOrgan = 4;   t6_f1();}
+       function t6_assignOrgan_06 () { selOrgan = 5;   t6_f1();}
+       function t6_assignOrgan_07 () { selOrgan = 6;   t6_f1();}
+       function t6_assignOrgan_08 () { selOrgan = 7;   t6_f1();}
+       function t6_assignOrgan_09 () { selOrgan = 8;   t6_f1();}
+       function t6_assignOrgan_10 () { selOrgan = 9;   t6_f1();}
+       function t6_assignOrgan_11 () { selOrgan = 10;  t6_f1();}
+       function t6_assignOrgan_12 () { selOrgan = 11;  t6_f1();}
+
+           //document.getElementById("myText_t6_1").value = "選取臟腑: Lu肺  ";
+           //document.getElementById("myText_t6_1").value = "選取臟腑: LI大腸";
+           //document.getElementById("myText_t6_1").value = "選取臟腑: ST胃  ";
+           //document.getElementById("myText_t6_1").value = "選取臟腑: SP脾  ";
+           //document.getElementById("myText_t6_1").value = "選取臟腑: HT心  ";
+           //document.getElementById("myText_t6_1").value = "選取臟腑: SI小腸";
+           //document.getElementById("myText_t6_1").value = "選取臟腑: BL膀胱";
+           //document.getElementById("myText_t6_1").value = "選取臟腑: KI腎  ";
+           //document.getElementById("myText_t6_1").value = "選取臟腑: PC心包";
+           //document.getElementById("myText_t6_1").value = "選取臟腑: SJ三焦";
+           //document.getElementById("myText_t6_1").value = "選取臟腑: GB膽  ";
+           //document.getElementById("myText_t6_1").value = "選取臟腑: LR肝  ";
+
+       function t6_f1() {
+             document.getElementById("myText_t6_1").value = "目前查詢經絡: "+OrgRealNameList[selOrgan]+"\n\n"+"五門十變規則 : "+mainList[selOrgan][0]+"\n"+"目前經絡本穴 : "+mainList[selOrgan][1]+"\n";
+       }
+
+       function t6_select01() {
+             var t6_tempStr1 ="";
+             t6_tempStr1 = t6_tempStr1 + "合化實證: "+mainList[selOrgan][3]+"\n\n";
+             t6_tempStr1 = t6_tempStr1 + "腑取穴:   "+mainList[selOrgan][4]+"\n";
+             t6_tempStr1 = t6_tempStr1 + "臟取穴:   "+mainList[selOrgan][5]+"\n";
+             document.getElementById("myText_t6_2").value = t6_tempStr1;
+       }      
+       function t6_select02() {
+             var t6_tempStr2 ="";
+             t6_tempStr2 = t6_tempStr2 + "合化虛證: "+mainList[selOrgan][6]+"\n\n";
+             t6_tempStr2 = t6_tempStr2 + "腑取穴:   "+mainList[selOrgan][7]+"\n";
+             t6_tempStr2 = t6_tempStr2 + "臟取穴:   "+mainList[selOrgan][8]+"\n";
+             document.getElementById("myText_t6_2").value = t6_tempStr2;
+       }      
+       function t6_select03() {
+             var t6_tempStr3 ="";
+             t6_tempStr3 = t6_tempStr3 + "目前查詢經絡:   "+OrgRealNameList[selOrgan]+"\n\n";
+             t6_tempStr3 = t6_tempStr3 + "互合治療取穴: "+mainList[selOrgan][6]+"\n";
+             document.getElementById("myText_t6_2").value = t6_tempStr3;
+       }      
+</script>
+
+
+
          <br>
   </div>
  
   <!---------------------- TAB --------------------------------------->
   <div id="tabs-7">
+
+
          
          <br>
   </div>
