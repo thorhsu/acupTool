@@ -8,12 +8,16 @@
   <link rel="stylesheet" href="https://jqueryui.com/resources/demos/style.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <!-- <script src="https://www.w3schools.com/lib/w3.js"></script> -->
   <script>
   $( function() {
     $( "#tabs" ).tabs();
   } );
   </script>
   <script type="text/javascript" src="acupElement.js"></script>
+
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
   <script>
        let listStr = "<h5>";
        let MeriList = [HandTaiYing,  HandYangMing, FootYangMing, FootTaiYing, HandShaoYing, HandTaiYang,  FootTaiYang,  FootShaoYing, HandJueYing,  HandShaoYang, FootShaoYang, FootJueYing];
@@ -59,18 +63,23 @@
        let selOrgan = 0;
 
        let OrgRealNameList    =  [  "Lu肺",   "LI大腸",   "ST胃",   "SP脾",   "HT心",   "SI小腸",   "BL膀胱",   "KI腎",   "PC心包",   "SJ三焦",   "GB膽",   "LR肝"]            
- 
+
+       let meriScore = [0,0,0,0,0,0,0,0,0,0,0,0];
+
+       let sympQ = ["氣短", "痰多"]
+  
   </script> 
 
 
 </head>
 <body>
 
-         <img src="acupTool_title.gif" height="170" width="300">
+         <img src="acupTool_title.gif" height="200" width="600">
          <!--<p>數位人生哲學起課程式</p>-->
 
 <div id="tabs">
   <ul>
+    <li><a href="#tabs-0">經絡定位</a></li> 
     <li><a href="#tabs-1">經絡查找</a></li>
     <li><a href="#tabs-2">穴位查找</a></li>
     <li><a href="#tabs-3">矩陣平衡</a></li>
@@ -79,6 +88,21 @@
     <li><a href="#tabs-6">五門十變</a></li>
 <!---    <li><a href="#tabs-7">靈龜八法</a></li> --->
   </ul>
+
+  <!---------------------- TAB --------------------------------------->
+  <div id="tabs-0">
+
+  <div>
+  <label>定位經絡查詢</label>
+  <ul>
+  <li><button onclick="location.href='sym_search1.html'" type="button"><h2>臟腑辨證定位</h2></button></li>
+  <br>
+  <li><button onclick="location.href='sym_search2.html'" type="button"><h2>循行部位定位</h2></button></li>
+  </ul>
+  </div>
+
+  </div>
+
 
   <!---------------------- TAB --------------------------------------->
   <div id="tabs-1">
@@ -169,7 +193,50 @@
   <!---------------------- TAB --------------------------------------->
   <div id="tabs-2">
 
-       <table border="1" cellpadding="1" cellspacing="1" style="width: 300px">
+  <div> <textarea id="t2_myText_0" rows="2" cols="30">目前所選經絡: </textarea> </div>
+
+
+  <div>
+       <table border="1" cellpadding="1" cellspacing="1" style="width: 360px">
+       <tbody> 
+           <form name="t2_form_name" id="t2_form_name">
+           <tr>
+               <td><label><input name="t2_sel" type="radio" value="0" checked>Lu肺</label></td>
+               <td><label><input name="t2_sel" type="radio" value="1">LI大腸</label></td>
+               <td><label><input name="t2_sel" type="radio" value="2">ST胃</label></td>
+               <td><label><input name="t2_sel" type="radio" value="3">SP脾</label></td>
+           </tr>
+           <tr>
+               <td><label><input name="t2_sel" type="radio" value="4">HT心</label></td>
+               <td><label><input name="t2_sel" type="radio" value="5">SI小腸</label></td>
+               <td><label><input name="t2_sel" type="radio" value="6">BL膀胱</label></td>
+               <td><label><input name="t2_sel" type="radio" value="7">KI腎</label></td>
+           </tr>
+           <tr>
+               <td><label><input name="t2_sel" type="radio" value="8">PC心包</label></td>
+               <td><label><input name="t2_sel" type="radio" value="9">SJ三焦</label></td>
+               <td><label><input name="t2_sel" type="radio" value="10">GB膽</label></td>
+               <td><label><input name="t2_sel" type="radio" value="11">LR肝</label></td>
+           </tr>
+           </form>
+
+       </tbody>
+       </table>
+  </div>
+
+      <div>
+           <table>    
+             <tr><button onclick="get_t2_sel(0)">本經擇穴</button></tr>
+             <tr><button onclick="get_t2_sel(1)">異經擇穴</button></tr>
+             <tr><button onclick="get_t2_sel(2)">同宮本經</button></tr>
+             <tr><button onclick="get_t2_sel(3)">原絡治療</button></tr>
+           </table>
+      </div>         
+
+
+<!---  <div> <textarea id="t2_myText_1" rows="20" cols="60">目前所選經絡: </textarea> </div> --->
+
+       <table border="1" cellpadding="1" cellspacing="1" style="width: 420px">
        <tbody> 
            <tr>
                <td colspan="2">
@@ -180,66 +247,6 @@
        </table>
        <p> &nbsp;</p>
 
-       <table border="0" cellpadding="1" cellspacing="1" style="width: 360px">
-       <tbody> 
-           <tr>
-               <td><button onclick="calAcup(0)">手太陰肺</button></td>
-               <td><button onclick="calAcup(5)">手陽明大腸</button></td>
-           </tr>
-           <tr>
-               <td><button onclick="calAcup(6)">足太陰脾</button></td>
-               <td><button onclick="calAcup(11)"> 足陽明胃</button></td>
-           </tr>
-           <tr>
-               <td><button onclick="calAcup(1)">手少陰心</button></td>
-               <td><button onclick="calAcup(3)">手太陽小腸</button></td>
-           </tr>
-           <tr>
-               <td><button onclick="calAcup(7)">足少陰腎</button></td>
-               <td><button onclick="calAcup(9)">足太陽膀胱</button></td>
-           </tr>
-           <tr>
-               <td><button onclick="calAcup(2)">手厥陰心包</button></td>
-               <td><button onclick="calAcup(4)">手少陽三焦</button></td>
-           </tr>
-           <tr>
-               <td><button onclick="calAcup(8)">足厥陰肝</button></td>
-               <td><button onclick="calAcup(10)"> 足少陽膽</button></td>
-           </tr>
-
-
-       </tbody>
-       </table>
-       <p> &nbsp;</p>
-
-
-
-<!--
-       <div>
-           <span><button onclick="calAcup(0)">手太陰肺</button></span>
-           <span><button onclick="calAcup(1)">手少陰心</button></span>
-       <div>
-       </div>
-           <span><button onclick="calAcup(2)">手厥陰心包</button></span>
-           <span><button onclick="calAcup(3)">手太陽小腸</button></span>
-       <div>
-       </div>
-           <span><button onclick="calAcup(4)">手少陽三焦</button></span>
-           <span><button onclick="calAcup(5)">手陽明大腸</button></span>
-       <div>
-       </div>
-           <span><button onclick="calAcup(6)">足太陰脾</button></span>
-           <span><button onclick="calAcup(7)">足少陰腎</button></span>
-       <div>
-       </div>
-           <span><button onclick="calAcup(8)">足厥陰肝</button></span>
-           <span><button onclick="calAcup(9)">足太陽膀胱</button></span>
-       <div>
-       </div>
-           <span><button onclick="calAcup(10)"> 足少陽膽</button></span>
-           <span><button onclick="calAcup(11)"> 足陽明胃 </button></span>
-       </div>
--->
 <!--
 <div>
 <form name="tabs_1_sel" id="SELECTION"> 
@@ -268,10 +275,49 @@
        
 <script type="text/javascript" charset="UTF-8">
        
+       function get_t2_sel (selNow) {
+                  //  讀取radio的值
+                  //alert("length="+form.t2_sel.length);
+                  //alert("Hello");
+                  var form = document.getElementById("t2_form_name");
+                  for(var i=0; i<form.t2_sel.length;i++){
+                      if(form.t2_sel[i].checked){
+                          var meriClick = form.t2_sel[i].value;
+                          //alert("meriClick="+meriClick+"i="+i);
+
+                          //document.getElementById("myText_t4").value = "";
+                          //document.getElementById("myText_t4").value = hexaOrder;
+
+                          listStr = "<h4>";
+                          if (selNow == 0){
+                              listStr=listStr+"<br>虛證之本經取穴 : "+MeriList[OrgNameList[meriClick]]+" : "+SuPListList[meriClick][0];
+                              listStr=listStr+"<br> 實證之本經取穴 : "+MeriList[OrgNameList[meriClick]]+" : "+SuPListList[meriClick][1];
+                          }
+                          else if (selNow == 1){
+                          listStr=listStr+"<br> 虛證之異經取穴 : "+MeriList[OrgNameList[meriClick]]+"之母經本穴 : "+SuPListList[meriClick][2];
+                          listStr=listStr+"<br> 實證之異經取穴 : "+MeriList[OrgNameList[meriClick]]+"之子經本穴 : "+SuPListList[meriClick][3];
+                          }
+                          else if (selNow == 2){
+                          listStr=listStr+"<br> 同宮本經之取穴三 : "+MeriList[OrgNameList[meriClick]]+"之三爻穴位 : "+SuPListList[meriClick][4];
+                          listStr=listStr+ "<br> 同宮本經之取穴上 : "+MeriList[OrgNameList[meriClick]]+"之上爻穴位 : "+SuPListList[meriClick][5];
+                          }
+                          else if (selNow == 3){
+                          listStr=listStr+"<br> 本經之原穴 : "+MeriList[OrgNameList[meriClick]]+"之原位 : "+SuPListList[meriClick][6];
+                          listStr=listStr+  "<br> 表裡本絡穴 : "+MeriList[OrgNameList[meriClick]]+"之絡穴 : "+SuPListList[meriClick][7];
+                          }
+                          listStr=listStr+  "</h4>";
+                  
+                          document.getElementById("t2_myText_0").value = "目前所選經絡 : "+OrgRealNameList[meriClick];   
+                  
+                          document.getElementById("acupContent").innerHTML = listStr;   
+                          
+                      }
+                  }
+       }
        
        function calAcup(meriClick){
 
-        listStr = "<h5>";
+        listStr = "<h4>";
         listStr=listStr+"虛證之本經取穴 : "+MeriList[OrgNameList[meriClick]]+" : "+SuPListList[meriClick][0];
         listStr=listStr+"<br> 實證之本經取穴 : "+MeriList[OrgNameList[meriClick]]+" : "+SuPListList[meriClick][1];
         listStr=listStr+"<br> 虛證之異經取穴 : "+MeriList[OrgNameList[meriClick]]+"之母經本穴 : "+SuPListList[meriClick][2];
@@ -280,9 +326,12 @@
         listStr=listStr+ "<br> 同宮本經之取穴上 : "+MeriList[OrgNameList[meriClick]]+"之上爻穴位 : "+SuPListList[meriClick][5];
         listStr=listStr+"<br><br> 本經之原穴 : "+MeriList[OrgNameList[meriClick]]+"之原位 : "+SuPListList[meriClick][6];
         listStr=listStr+  "<br> 表裡本絡穴 : "+MeriList[OrgNameList[meriClick]]+"之絡穴 : "+SuPListList[meriClick][7];
-        listStr=listStr+  "</h5>";
+        listStr=listStr+  "</h4>";
+
+        document.getElementById("t2_myText_0").value = "目前所選經絡 : "+OrgRealNameList[meriClick];   
 
         document.getElementById("acupContent").innerHTML = listStr;   
+
         
         }
  
@@ -571,14 +620,14 @@
           <form name="form_upHexa" id="form_upHexa">
               上三爻選取:
               <!--radio buttons-->
-              <label><input name="upHexa" type="radio" value="111" checked>陽</label>
+              <label><input name="upHexa" type="radio" value="111" checked>乾</label>
               <label><input name="upHexa" type="radio" value="110">巽</label>
               <label><input name="upHexa" type="radio" value="101">離</label>
               <label><input name="upHexa" type="radio" value="100">艮</label>
               <label><input name="upHexa" type="radio" value="011">兌</label>
               <label><input name="upHexa" type="radio" value="010">坎</label>
               <label><input name="upHexa" type="radio" value="001">震</label>
-              <label><input name="upHexa" type="radio" value="000">陰</label>
+              <label><input name="upHexa" type="radio" value="000">坤</label>
               <br>
           </form>
       </div>
@@ -588,14 +637,14 @@
           <form name="form_dnHexa" id="form_dnHexa">
               下三爻選取:
               <!--radio buttons-->
-              <label><input name="dnHexa" type="radio" value="111" checked>陽</label>
+              <label><input name="dnHexa" type="radio" value="111" checked>乾</label>
               <label><input name="dnHexa" type="radio" value="110">巽</label>
               <label><input name="dnHexa" type="radio" value="101">離</label>
               <label><input name="dnHexa" type="radio" value="100">艮</label>
               <label><input name="dnHexa" type="radio" value="011">兌</label>
               <label><input name="dnHexa" type="radio" value="010">坎</label>
               <label><input name="dnHexa" type="radio" value="001">震</label>
-              <label><input name="dnHexa" type="radio" value="000">陰</label>
+              <label><input name="dnHexa" type="radio" value="000">坤</label>
               <br>
           </form>
       </div>
@@ -899,7 +948,7 @@
  
   <!---------------------- TAB --------------------------------------->
   <div id="tabs-6">
-  <textarea id="myText_t6_1" rows="4" cols="60"></textarea> 
+  <textarea id="myText_t6_1" rows="5" cols="60"></textarea> 
 
       <div>
            <table>
@@ -919,7 +968,7 @@
            </table>
       </div>
       <div>         
-           <textarea id="myText_t6_2" rows="4" cols="60"></textarea> 
+           <textarea id="myText_t6_2" rows="5" cols="110"></textarea> 
       </div>         
       <div>
            <table>    
