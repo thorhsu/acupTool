@@ -38,7 +38,7 @@ app.post("/",function(req,res) {
     db.select({userid:userid,password:password},function(data){
         if(data.length===1) {
             req.session["login"]=true;
-            res.redirect("/acupToolhtml");
+            res.redirect("/acupTool.html");
         } else {
             res.render("error",{message:"帳號密碼錯誤"}); 
         }
