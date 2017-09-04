@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="login">
+            <h1 class="login-heading">
+                <strong>Welcome.</strong>
+                <span><%=(isLogin?"Signed":"Not signed")%>.</span>
+            </h1>
+            <div>
+                <a href="/acupTool.html" class="lnk">上醫堂經絡循行取穴程式</a><br>
+            </div>
+            <% if (!isLogin) { %>
+            <button type="button" class="btn" onclick="location.href='/login.html';">Sign in</button>
+            <% } else { %>
+            <button type="button" class="btn" onclick="location.href='/logout';">Sign out</button>
+            <% } %>
+        </div>
+    </div>
+</body>
+</html>
